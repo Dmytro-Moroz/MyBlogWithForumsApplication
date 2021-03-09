@@ -1,0 +1,56 @@
+﻿@model ForumIndexModel
+
+<div class="container body-content">
+    <div class="row sectionHeader">
+        <div class="sectionHeading text-center">ALL FORUMS</div>
+        <div class="sectionDescription">
+            <p>Welcome to <strong>My Blog application</strong>. Please select a forum you are interested in.</p>
+            <p>
+                Please read the Forum Guidelines before creating a new post.
+                @if (Context.User.Identity.IsAuthenticated)
+                {
+                    <span>You must be a <a asp-controller="Account" asp-action="Register">registered </a> to create a new post.</span>
+                }
+            </p>
+        </div>
+    </div>
+    <div class="row" id="forumIndexContent">
+        <table class="table table-hover" id="forumIndexTable">
+            <tbody>
+                @foreach (var forum in Model.ForumListing)
+                {
+                    <tr>
+                        <td>
+                            <div class="forumLogo" style="background-image: url(@forum.ForumImage); background-size:100%"></div>
+                            <div class="forumData">
+                                <div class="forumTitle">
+                                    <a asp-controller="Forum" asp-action="Topic" asp-route-id="@forum.Id">@forum.Name</a>
+                                </div>
+                                <div class="forumSubTitle">
+                                    @if (forum.HasRecentPost)
+                                    {
+                                        <div class="hasRecentPost">Hot</div>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="forumPostCount">
+                                @forum.PostsCount Posts
+                            </div>
+                            <div class="forumMemberCount">
+                                @forum.UsersCount Users
+                            </div>
+                        </td>
+                        <td>
+                            <div class="forumDescription">
+                                @forum.Description
+                            </div>
+                        </td>
+                    </tr>
+                }
+
+            </tbody>
+        </table>
+    </div>
+</div>

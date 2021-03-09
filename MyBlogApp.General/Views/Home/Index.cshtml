@@ -1,0 +1,55 @@
+﻿@model MyBlogApp.General.Models.Home.HomeIndexModel
+
+<div class="container text-body homePage">
+    <div class="row mainPageWallPapper">
+        <div class="col-md-6">
+            <div class="mainPageHeading">Welcome to Forum app!</div>
+            <p class="mainPageSubHeading">The most popular theme to discuss on forums it's about music!</p>
+            <div>
+                <form asp-controller="Search" asp-action="Search" method="post">
+                    <input asp-for="QueryString" type="text" class="homeSearch" placeholder="Search"/>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+
+        </div>
+    </div>
+    <div class="rowmainPageContent">
+        <h3 id="latestPosts">Latest posts</h3>
+        <table class="table table-dark table-hover latestPostsTable" id="latestPostsTable">
+            <tbody>
+                @foreach (var post in Model.LastPosts)
+                {
+                    <tr>
+                        <td>
+                            <div class="forumLogo" style="background-image: url(@post.ForumImageUrl);"></div>
+                            <div class="postTitle">
+                                <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id">
+                                    @post.Title
+                                </a>
+                            </div>
+                            <div class="postSubTitle">
+                                @if (@post.RepliesCount == 0)
+                                {
+                                    <span>No Replies yet.</span>
+                                }
+                                @if (@post.RepliesCount == 1)
+                                {
+                                    <span>@post.RepliesCount reply</span>
+                                }
+                                else
+                                {
+                                    <span>@post.RepliesCount replies</span>
+                                }
+                                <span class="postUser">
+                                    <a asp-controller="Profile" asp-action="Detail" asp-route-id="@post.AuthorId">@post.AuthorName</a>
+                                </span>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

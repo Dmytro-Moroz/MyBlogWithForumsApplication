@@ -1,0 +1,93 @@
+﻿@model ForumTopicModel
+
+
+<div class="container body-content">
+    <div class="row sectionHeader">
+        <div class="sectionHeading">
+            @if (Context.User.Identity.IsAuthenticated)
+            {
+                <div id="headingBtn">
+                    <a asp-controller="Post" asp-action="CreatePost" asp-route-id="@Model.Forum.Id" class="btn btn-newPost">Create new Post</a>
+                </div>
+            }
+            <form asp-controller="Forum" asp-action="Search" method="post">
+                <div class="searchForum">
+                    <input asp-for="SearchQuery" type="text" placeholder="Search.." class="searchingBar" onfocus="clearThis(this)" />
+                    <button type="submit" class="btn btnForumSearch">
+                        <i class="material-icons">search</i>
+                    </button>
+                </div>
+                <input asp-for="Forum.Id" name="id" type="hidden" />
+            </form>
+        </div>
+        <div class="sectionDescription">
+            <div class="forumLogoTopic" style="background-image: url(@Model.Forum.ForumImage)"></div>
+            <p>Welcome to the @Model.Forum.Name</p>
+            @if (!User.Identity.IsAuthenticated)
+            {
+                <p style="margin-left: 5%">
+                    <span>You must be <a asp-controller="Account" asp-action="Register">registered</a>  for creating posts!</span>
+                </p>
+            }
+        </div>
+    </div>
+    <div class="row forumIndexContent">
+        @if (Model.Posts.Any())
+        {
+            <table class="table table-dark table-hover" id="forumIndexTable">
+                <tbody>
+                    @foreach (var post in Model.Posts)
+                    {
+                        <tr>
+                            <td>
+                                <div class="postData">
+                                    <div class="postTitle">
+                                        <a asp-controller="Post" asp-action="Index" asp-route-id="@post.Id" style="color: #76ff03; text-decoration: none;">@post.Title</a>
+                                    </div>
+                                    <div class="forumSubTitle">
+                                        <div>
+                                            <span class="postAuthor">
+                                                <a asp-controller="Profile" asp-action="Detail" asp-route-id="@post.AuthorId" style="color: #76ff03; text-decoration: none;">@post.AuthorName</a>
+                                            </span>
+                                            (@post.AuthorRating) on
+                                            <span class="postDate">
+                                                @post.DatePosting
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <div class="forumPostCount">
+                                    Replies: @post.RepliesCount
+                                </div>
+                            </td>
+                            <td>
+                                <div class="postDate">@post.DatePosting</div>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <div class="noPosts">
+                <i class="material-icons md-72">speaker_notes_off</i>
+                <h3>
+                    There is no posts yet!<br/><br/>
+                    Do you want to <a asp-controller="Post" asp-action="CreatePost" asp-route-id="@Model.Forum.Id"><span>create</span></a> first post?
+                </h3>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts
+{
+    <script>
+        function clearThis(target) {
+            target.value = "";
+        }
+    </script>
+}

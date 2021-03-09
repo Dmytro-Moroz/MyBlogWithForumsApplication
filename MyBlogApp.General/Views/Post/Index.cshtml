@@ -1,0 +1,67 @@
+﻿@model PostIndexModel
+
+<div class="container body-content">
+    <div class="row postHeader">
+        <div class="postHeading">
+            <div class="postIndexTitle">
+                @Model.Title
+            </div>
+            <div id="headingBtn"><a asp-controller="Forum" asp-action="Topic" asp-route-id="@Model.ForumId" class="btn btn-primary">Back to @Model.ForumName</a></div>
+        </div>
+    </div>
+
+    <div class="row" id="postIndexContent">
+        <div class="col-md-3 postAuthorContainer">
+            <div class="postAuthorImage" style="background-image: url(@Model.AuthorImage)"></div>
+            <a asp-controller="Profile" asp-action="Detail" asp-route-id="@Model.AuthorId">@Model.AuthorName</a>
+            <div class="postDate">@Model.CreatedDate</div>
+            @if (Model.IsAuthorAdmin)
+            {
+                <span class="isAdmin smaller">Admin</span>
+            }
+        </div>
+        <div class="col-md-9 postContentContainer">
+            <div class="postContent">
+                @Html.Raw(Model.PostContent)
+            </div>
+        </div>
+    </div>
+
+    <div class="row" id="replyDevider"></div>
+
+    @if (User.Identity.IsAuthenticated)
+    {
+        <div class="row">
+            <span><a asp-controller="Reply" asp-action="CreateReply" asp-route-id="@Model.Id" class="btn btn-newReply">Reply for this post</a></span>
+        </div>
+    }
+    @if (@Model.PostReplies.Any())
+    {
+        foreach (var repl in Model.PostReplies)
+        {
+            <div class="row replyContent">
+                <div class="col-md-3 replyAuthorContainer">
+                    <div class="postAuthorImage" style="background-image: url(@repl.AuthorImage)"></div>
+                    <a asp-controller="Profile" asp-action="Detail" asp-route-id="@repl.AuthorId">@repl.AuthorName</a>
+                    @if (repl.IsAuthorAdmin)
+                    {
+                        <span class="isAdmin smaller">Admin</span>
+                        <br />
+                    }
+                    <span>@repl.CreatedDate.ToString("")</span>
+                </div>
+                <div class="col=md-9 replyContentContainer">
+                    <div class="postContent">
+                        @Html.Raw(repl.ReplyContent)
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="noPosts">
+            <h3>No posts to show yet.</h3>
+        </div>
+    }
+</div>

@@ -1,0 +1,20 @@
+﻿@model NewPostModel
+
+<h2 style="font-weight: bold;">@Model.ForumName: create new Post</h2>
+
+<div class="authorNamePost">
+    You are posting as  <strong style="font-size: 20px;">@Model.AuthorName</strong>
+</div>
+
+<form asp-action="AddPost" id="addPostForm" method="post">
+    <div class="form-group">
+        <label asp-for="Title"></label>
+        <input asp-for="Title" class="form-control" style="width: 50%;" />
+    </div>
+    <div class="form-group">
+        <label asp-for="Content"></label>
+        <textarea asp-for="Content" class="form-control" style="width: 70%;"></textarea>
+    </div>
+    <button type="submit" id="PostBtn" class="btn btn-success">Submit Post</button>
+    <input asp-for="ForumId" type="hidden" />
+</form>

@@ -1,0 +1,40 @@
+﻿@model PostReplyModel
+
+<div class="container body-content">
+    <div class="row sectionHeader">
+        <div class="sectionHeading">
+            Replies from @Model.PostTitle
+        </div>
+        <div class="forumLogo" style="background-image: url(@Model.ForumImage)"></div>
+        <span id="headingBtn"><a class="btn btn-primary headingBtnReply" asp-controller="Post" asp-action="Index" asp-route-id="@Model.PostId">Back to Post</a></span>
+    </div>
+    <div class="row">
+        <div class="postReply">
+            <h3>
+                @Model.PostTitle
+            </h3>
+            <p>
+                @Model.PostContent
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div id="createReply">
+            <div class="authorSenderReply">
+                You have submitting this reply as @Model.AuthorName
+            </div>
+            <form method="post" asp-action="AddReply" class="addPostForm">
+                <div asp-validation-summary="All" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ReplyContent">Reply: </label>
+                    <textarea asp-for="ReplyContent" cols="30" class="form-control" placeholder="Reply here: "></textarea>
+                    <span asp-validation-for="ReplyContent" class="text-danger"></span>
+                </div>
+                <button type="submit" id="submitReply" class="btn btn-warning">Submit reply</button>
+                <input asp-for="AuthorId" type="hidden"/>
+                <input asp-for="PostId" type="hidden"/>
+                <input asp-for="ForumId" type="hidden"/>
+            </form>
+        </div>
+    </div>
+</div>

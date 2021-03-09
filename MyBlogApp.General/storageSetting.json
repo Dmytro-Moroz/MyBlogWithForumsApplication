@@ -1,0 +1,5 @@
+{
+  "ConnectionStrings": {
+    "AzureStorage": "DefaultEndpointsProtocol=https;AccountName=myblogapp;AccountKey=bcDOI7t3HsMtdf40yDfXKFYM/DN9FC/ms7Y8o5t4KtNTDS0zpVkTmJMw4T7BR8XNQU8rKnzxAwnAGFJeXJ6/3g==;EndpointSuffix=core.windows.net"
+  }
+}

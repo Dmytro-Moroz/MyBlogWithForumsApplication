@@ -1,0 +1,34 @@
+﻿@model ProfileListModel
+
+<div class="container body-content">
+    <div class="row sectionHeader">
+        <div class="sectionHeading">All Users</div>
+    </div>
+    <div class="row" id="forumIndexContent">
+        <table class="table table-hover" id="userIndexTable">
+            <thead>
+            <tr style="background-color: cornflowerblue;">
+                <td>Image</td>
+                <td>UserName</td>
+                <td>Email</td>
+                <td>Registration date</td>
+                <td>Rating</td>
+            </tr>
+            </thead>
+            <tbody>
+                @foreach (var profile in Model.Profiles)
+                {
+                    <tr class="userItem">
+                        <td>
+                            <div class="userProfilePicture" style="background-image: url(@profile.ProfileImage)"></div>
+                        </td>
+                        <td>@profile.UserName</td>
+                        <td>@profile.Email</td>
+                        <td>@profile.MemberSince</td>
+                        <td>@profile.Rating</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
